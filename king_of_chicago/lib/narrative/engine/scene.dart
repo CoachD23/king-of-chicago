@@ -56,6 +56,12 @@ class Scene extends Equatable {
   final List<Choice> choices;
   final String? type;
 
+  /// Optional action to trigger: 'ambush', 'shakedown', or null.
+  final String? action;
+
+  /// Configuration for the action, e.g. {targetName: "Sal", targetResistance: 80}.
+  final Map<String, dynamic>? actionConfig;
+
   const Scene({
     required this.id,
     required this.location,
@@ -64,6 +70,8 @@ class Scene extends Equatable {
     required this.dialogue,
     required this.choices,
     this.type,
+    this.action,
+    this.actionConfig,
   });
 
   @override
@@ -75,5 +83,7 @@ class Scene extends Equatable {
         dialogue,
         choices,
         type,
+        action,
+        actionConfig,
       ];
 }

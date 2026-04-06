@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/veils/veil_provider.dart';
 import '../../ui/theme/game_theme.dart';
+import '../../ui/widgets/veil_hud.dart';
 import '../engine/narrative_engine.dart';
 import '../engine/scene.dart';
 import 'choice_wheel.dart';
@@ -31,6 +32,7 @@ class DialogueScreen extends ConsumerWidget {
         child: Column(
           children: [
             _buildLocationHeader(),
+            const VeilHud(),
             Expanded(child: _buildDialogueList()),
             ChoiceWheel(
               availableChoices: available,

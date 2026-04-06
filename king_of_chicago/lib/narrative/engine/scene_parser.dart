@@ -40,6 +40,14 @@ class SceneParser {
       );
     }).toList(growable: false);
 
+    final actionConfigRaw = doc['action_config'] as YamlMap?;
+    final Map<String, dynamic>? actionConfig = actionConfigRaw != null
+        ? Map<String, dynamic>.unmodifiable({
+            for (final entry in actionConfigRaw.entries)
+              entry.key.toString(): entry.value,
+          })
+        : null;
+
     return Scene(
       id: doc['scene'] as String,
       location: doc['location'] as String,
@@ -48,6 +56,8 @@ class SceneParser {
       dialogue: dialogue,
       choices: choices,
       type: doc['type'] as String?,
+      action: doc['action'] as String?,
+      actionConfig: actionConfig,
     );
   }
 
