@@ -1,0 +1,21 @@
+scene: act2_coalition
+location: south_side
+characters:
+  - vince
+  - narrator
+mood: somber
+type: falls
+dialogue:
+  - speaker: narrator
+    line: "END OF ACT ONE"
+  - speaker: narrator
+    line: "Vince Moretti chose alliances. The phone calls started before sunrise."
+  - speaker: narrator
+    line: "Act Two: The Streets — coming soon."
+  - speaker: narrator
+    line: "Your Seven Veils will carry forward. Every choice you made is shaping the Don you'll become."
+choices:
+  - id: restart
+    line: "Play again from the beginning."
+    veils: {}
+    next: intro

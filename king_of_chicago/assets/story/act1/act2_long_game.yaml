@@ -1,0 +1,21 @@
+scene: act2_long_game
+location: south_side
+characters:
+  - vince
+  - narrator
+mood: quiet
+type: falls
+dialogue:
+  - speaker: narrator
+    line: "END OF ACT ONE"
+  - speaker: narrator
+    line: "Vince Moretti chose patience. Let them celebrate. Let them get sloppy."
+  - speaker: narrator
+    line: "Act Two: The Streets — coming soon."
+  - speaker: narrator
+    line: "Your Seven Veils will carry forward. Every choice you made is shaping the Don you'll become."
+choices:
+  - id: restart
+    line: "Play again from the beginning."
+    veils: {}
+    next: intro
