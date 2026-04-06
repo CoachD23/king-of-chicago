@@ -5,11 +5,13 @@ import '../../core/veils/veil_provider.dart';
 import '../../core/veils/veil_type.dart';
 import '../theme/game_theme.dart';
 import '../theme/veil_colors.dart';
+import 'art_deco_border.dart';
 
-/// A compact horizontal bar showing all 7 Veils with colored dots and values.
+/// An elegant art deco status bar showing all 7 Veils as vertical bars.
 ///
-/// Watches [veilProvider] for reactive updates. Designed to sit at the top
-/// of the DialogueScreen between the location header and dialogue content.
+/// Each indicator is a small vertical bar whose height fills based on value
+/// (0-100), colored with the Veil's glow color. The whole bar sits in a
+/// panel with art deco corner decorations.
 class VeilHud extends ConsumerWidget {
   const VeilHud({super.key});
 
@@ -27,70 +29,116 @@ class VeilHud extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final veilState = ref.watch(veilProvider);
 
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
-      decoration: const BoxDecoration(
-        color: Color(0xFF111111),
-        border: Border(
-          bottom: BorderSide(color: GameTheme.borderColor, width: 0.5),
+    return ArtDecoBorder(
+      cornerSize: 10,
+      strokeWidth: 0.5,
+      child: Container(
+        width: double.infinity,
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        decoration: const BoxDecoration(
+          color: GameTheme.surface,
+          border: Border(
+            top: BorderSide(color: GameTheme.smoke, width: 0.5),
+            bottom: BorderSide(color: GameTheme.smoke, width: 0.5),
+          ),
         ),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: VeilType.values.map((veil) {
-          final color = VeilColors.getColor(veil);
-          final value = veilState.getValue(veil);
-          final abbr = _abbreviations[veil] ?? veil.displayName.substring(0, 3).toUpperCase();
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: VeilType.values.map((veil) {
+            final glowColor = VeilColors.getGlow(veil);
+            final primaryColor = VeilColors.getColor(veil);
+            final value = veilState.getValue(veil);
+            final abbr = _abbreviations[veil] ??
+                veil.displayName.substring(0, 3).toUpperCase();
 
-          return _VeilChip(color: color, abbreviation: abbr, value: value);
-        }).toList(growable: false),
+            return _VeilBar(
+              glowColor: glowColor,
+              primaryColor: primaryColor,
+              abbreviation: abbr,
+              value: value,
+            );
+          }).toList(growable: false),
+        ),
       ),
     );
   }
 }
 
-class _VeilChip extends StatelessWidget {
-  final Color color;
+class _VeilBar extends StatelessWidget {
+  final Color glowColor;
+  final Color primaryColor;
   final String abbreviation;
   final int value;
 
-  const _VeilChip({
-    required this.color,
+  static const double _barHeight = 40.0;
+  static const double _barWidth = 8.0;
+
+  const _VeilBar({
+    required this.glowColor,
+    required this.primaryColor,
     required this.abbreviation,
     required this.value,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    final fillFraction = (value / 100).clamp(0.0, 1.0);
+
+    return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
+        // Value above bar
+        if (value > 0)
+          Text(
+            '$value',
+            style: GameTheme.veilValueStyle.copyWith(color: glowColor),
+          ),
+        if (value == 0)
+          Text(
+            '-',
+            style: GameTheme.veilValueStyle.copyWith(
+              color: GameTheme.ash.withAlpha(80),
+            ),
+          ),
+        const SizedBox(height: 2),
+        // The vertical bar
         Container(
-          width: 8,
-          height: 8,
+          width: _barWidth,
+          height: _barHeight,
           decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: color,
+            color: GameTheme.backgroundColor,
+            border: Border.all(color: primaryColor.withAlpha(60), width: 0.5),
+            borderRadius: BorderRadius.circular(2),
+          ),
+          child: Align(
+            alignment: Alignment.bottomCenter,
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 400),
+              curve: Curves.easeOut,
+              width: _barWidth,
+              height: _barHeight * fillFraction,
+              decoration: BoxDecoration(
+                color: glowColor.withAlpha(180),
+                borderRadius: BorderRadius.circular(1),
+                boxShadow: value > 0
+                    ? [
+                        BoxShadow(
+                          color: glowColor.withAlpha(40),
+                          blurRadius: 4,
+                          spreadRadius: 1,
+                        ),
+                      ]
+                    : null,
+              ),
+            ),
           ),
         ),
-        const SizedBox(width: 3),
+        const SizedBox(height: 3),
+        // Abbreviated label
         Text(
           abbreviation,
-          style: TextStyle(
-            fontSize: 9,
-            fontWeight: FontWeight.w600,
-            letterSpacing: 0.5,
-            color: color.withOpacity(0.8),
-          ),
-        ),
-        const SizedBox(width: 2),
-        Text(
-          '$value',
-          style: TextStyle(
-            fontSize: 10,
-            fontWeight: FontWeight.bold,
-            color: color,
+          style: GameTheme.labelStyle.copyWith(
+            color: primaryColor.withAlpha(180),
           ),
         ),
       ],

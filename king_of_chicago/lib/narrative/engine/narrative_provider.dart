@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show debugPrint;
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -71,10 +72,11 @@ class NarrativeNotifier extends Notifier<NarrativeState> {
         sceneHistory: [...state.sceneHistory, sceneId],
         isLoading: false,
       );
-    } on Exception catch (e) {
+    } catch (e) {
+      debugPrint('Failed to load scene "$sceneId": $e');
       state = state.copyWith(
         isLoading: false,
-        error: 'Scene not found: $sceneId ($e)',
+        error: 'Scene not found: $sceneId',
       );
     }
   }

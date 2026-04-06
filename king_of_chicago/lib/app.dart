@@ -9,6 +9,9 @@ import 'core/veils/veil_provider.dart';
 import 'narrative/dialogue/dialogue_screen.dart';
 import 'narrative/engine/narrative_provider.dart';
 import 'ui/theme/game_theme.dart';
+import 'ui/widgets/art_deco_border.dart';
+import 'ui/widgets/gold_divider.dart';
+import 'ui/widgets/grain_overlay.dart';
 import 'ui/widgets/scene_transition.dart';
 
 class KingOfChicagoApp extends StatelessWidget {
@@ -54,27 +57,16 @@ class _GameScreenState extends ConsumerState<GameScreen> {
     }
 
     if (narrativeState.isLoading || narrativeState.currentScene == null) {
-      return const Scaffold(
-        backgroundColor: GameTheme.background,
-        body: Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text('KING OF CHICAGO', style: GameTheme.titleStyle),
-              SizedBox(height: 24),
-              CircularProgressIndicator(
-                color: GameTheme.accent,
-              ),
-            ],
-          ),
-        ),
-      );
+      return _buildTitleScreen();
     }
 
     // Feature 1: Show action screen when pending action exists
     final pendingAction = narrativeState.pendingAction;
     if (pendingAction != null) {
-      return _buildActionScreen(pendingAction, narrativeState.pendingActionConfig);
+      return _buildActionScreen(
+        pendingAction,
+        narrativeState.pendingActionConfig,
+      );
     }
 
     // Feature 3: Wrap dialogue in a scene transition
@@ -86,6 +78,52 @@ class _GameScreenState extends ConsumerState<GameScreen> {
         onChoiceSelected: (choice) {
           ref.read(narrativeProvider.notifier).selectChoice(choice);
         },
+      ),
+    );
+  }
+
+  /// Art Deco title screen — movie title card aesthetic.
+  Widget _buildTitleScreen() {
+    return Scaffold(
+      backgroundColor: GameTheme.backgroundColor,
+      body: Stack(
+        children: [
+          const GrainOverlay(opacity: 0.04),
+          Center(
+            child: ArtDecoBorder(
+              cornerSize: 28,
+              strokeWidth: 1.0,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 48,
+                  vertical: 40,
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      'KING OF CHICAGO',
+                      style: GameTheme.titleStyle,
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 8),
+                    const GoldDivider(
+                      verticalPadding: 12,
+                      diamondSize: 5,
+                    ),
+                    Text(
+                      'CHICAGO, 1929',
+                      style: GameTheme.subtitleStyle,
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 28),
+                    const _GoldPulsingDot(),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -141,44 +179,129 @@ class _GameScreenState extends ConsumerState<GameScreen> {
     return Scaffold(
       backgroundColor: GameTheme.background,
       body: SafeArea(
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(32),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Icon(
-                  Icons.error_outline,
-                  color: GameTheme.danger,
-                  size: 64,
-                ),
-                const SizedBox(height: 16),
-                Text(
-                  'Scene Not Found',
-                  style: GameTheme.titleStyle.copyWith(fontSize: 24),
-                ),
-                const SizedBox(height: 12),
-                Text(
-                  errorMessage,
-                  style: GameTheme.narratorStyle,
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 24),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: GameTheme.accent,
-                    foregroundColor: GameTheme.background,
+        child: Stack(
+          children: [
+            const GrainOverlay(opacity: 0.03),
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.all(32),
+                child: ArtDecoBorder(
+                  cornerSize: 20,
+                  child: Padding(
+                    padding: const EdgeInsets.all(24),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(
+                          Icons.error_outline,
+                          color: GameTheme.bloodAccent,
+                          size: 48,
+                        ),
+                        const SizedBox(height: 16),
+                        Text(
+                          'SCENE NOT FOUND',
+                          style: GameTheme.speakerStyle.copyWith(
+                            fontSize: 16,
+                            color: GameTheme.goldHighlight,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        const GoldDivider(
+                          verticalPadding: 8,
+                          diamondSize: 4,
+                        ),
+                        Text(
+                          errorMessage,
+                          style: GameTheme.narratorStyle,
+                          textAlign: TextAlign.center,
+                        ),
+                        const SizedBox(height: 24),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: GameTheme.goldAccent,
+                            foregroundColor: GameTheme.backgroundColor,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(2),
+                            ),
+                          ),
+                          onPressed: () {
+                            ref.read(narrativeProvider.notifier).clearError();
+                          },
+                          child: Text(
+                            'RETURN TO LAST SCENE',
+                            style: GameTheme.labelStyle.copyWith(
+                              color: GameTheme.backgroundColor,
+                              fontSize: 12,
+                              letterSpacing: 2.0,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                  onPressed: () {
-                    ref.read(narrativeProvider.notifier).clearError();
-                  },
-                  child: const Text('Return to last scene'),
                 ),
-              ],
+              ),
             ),
-          ),
+          ],
         ),
       ),
+    );
+  }
+}
+
+/// A pulsing gold dot for the loading screen — replaces the circular spinner.
+class _GoldPulsingDot extends StatefulWidget {
+  const _GoldPulsingDot();
+
+  @override
+  State<_GoldPulsingDot> createState() => _GoldPulsingDotState();
+}
+
+class _GoldPulsingDotState extends State<_GoldPulsingDot>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _controller;
+  late final Animation<double> _animation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 1200),
+      vsync: this,
+    )..repeat(reverse: true);
+    _animation = Tween<double>(begin: 0.3, end: 1.0).animate(
+      CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: _animation,
+      builder: (context, child) {
+        return Container(
+          width: 8,
+          height: 8,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: GameTheme.goldAccent.withAlpha((_animation.value * 255).toInt()),
+            boxShadow: [
+              BoxShadow(
+                color: GameTheme.goldAccent
+                    .withAlpha((_animation.value * 80).toInt()),
+                blurRadius: 8,
+                spreadRadius: 2,
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }

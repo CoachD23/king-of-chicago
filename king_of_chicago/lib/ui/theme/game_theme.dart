@@ -1,82 +1,169 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
-/// Visual constants for the King of Chicago game UI.
+/// Art Deco Noir visual constants for the King of Chicago game UI.
+///
+/// Think: 1930s speakeasy menu meets film noir title card.
+/// Gold leaf on obsidian. Sharp geometric borders.
 class GameTheme {
   GameTheme._();
 
-  // Core palette
-  static const Color backgroundColor = Color(0xFF0A0A0A);
-  static const Color textColor = Color(0xFFE0D5C0);
-  static const Color dialogueBackground = Color(0xFF1A1A1A);
-  static const Color borderColor = Color(0xFF3A3A3A);
-  static const Color speakerGold = Color(0xFFD4AF37);
-  static const Color narratorDim = Color(0xFFB0A890);
-  static const Color lockedGrey = Color(0xFF666666);
+  // ── Core palette ──────────────────────────────────────────────────────
 
-  // Aliases kept for backward compatibility
+  /// Near-black with warmth, like old leather.
+  static const Color backgroundColor = Color(0xFF0D0B08);
+
+  /// Dark brown-black surface.
+  static const Color surface = Color(0xFF1A1612);
+
+  /// Aged gold accent.
+  static const Color goldAccent = Color(0xFFC9A84C);
+
+  /// Lighter gold for text highlights.
+  static const Color goldHighlight = Color(0xFFE8D5A3);
+
+  /// Dark crimson blood accent.
+  static const Color bloodAccent = Color(0xFF8B1A1A);
+
+  /// Smoke color for borders and dividers.
+  static const Color smoke = Color(0xFF2A2520);
+
+  /// Secondary text / ash color.
+  static const Color ash = Color(0xFF9C9488);
+
+  /// Primary text / parchment color.
+  static const Color parchment = Color(0xFFD4C5A9);
+
+  // ── Backward-compatibility aliases ────────────────────────────────────
+
   static const Color background = backgroundColor;
-  static const Color surface = Color(0xFF1A1A2E);
-  static const Color accent = speakerGold;
-  static const Color textPrimary = Color(0xFFE0E0E0);
-  static const Color textSecondary = Color(0xFF9E9E9E);
-  static const Color danger = Color(0xFF8B0000);
+  static const Color accent = goldAccent;
+  static const Color textColor = parchment;
+  static const Color textPrimary = parchment;
+  static const Color textSecondary = ash;
+  static const Color borderColor = smoke;
+  static const Color speakerGold = goldAccent;
+  static const Color narratorDim = ash;
+  static const Color lockedGrey = Color(0xFF5A5550);
+  static const Color danger = bloodAccent;
+  static const Color dialogueBackground = surface;
 
-  // Text styles
-  static const TextStyle titleStyle = TextStyle(
-    color: accent,
-    fontSize: 32,
-    fontWeight: FontWeight.bold,
-    letterSpacing: 2.0,
-  );
+  // ── Text styles ───────────────────────────────────────────────────────
 
-  static const TextStyle dialogueStyle = TextStyle(
-    fontFamily: 'Serif',
-    fontSize: 16,
-    height: 1.5,
-    color: textColor,
-  );
+  /// Large title — Playfair Display, gold, letter-spaced.
+  static TextStyle get titleStyle => GoogleFonts.playfairDisplay(
+        color: goldHighlight,
+        fontSize: 32,
+        fontWeight: FontWeight.bold,
+        letterSpacing: 4.0,
+      );
 
-  static const TextStyle speakerStyle = TextStyle(
-    fontFamily: 'Serif',
-    fontSize: 13,
-    fontWeight: FontWeight.w700,
-    letterSpacing: 2.0,
-    color: speakerGold,
-  );
+  /// Subtitle — Josefin Sans, ash/gold.
+  static TextStyle get subtitleStyle => GoogleFonts.josefinSans(
+        color: ash,
+        fontSize: 14,
+        fontWeight: FontWeight.w300,
+        letterSpacing: 6.0,
+      );
 
-  static const TextStyle narratorStyle = TextStyle(
-    fontFamily: 'Serif',
-    fontSize: 16,
-    height: 1.5,
-    fontStyle: FontStyle.italic,
-    color: narratorDim,
-  );
+  /// Speaker name — Josefin Sans, uppercase, gold.
+  static TextStyle get speakerStyle => GoogleFonts.josefinSans(
+        color: goldAccent,
+        fontSize: 13,
+        fontWeight: FontWeight.w600,
+        letterSpacing: 3.0,
+      );
 
-  static const TextStyle choiceStyle = TextStyle(
-    fontFamily: 'Serif',
-    fontSize: 15,
-    height: 1.4,
-    color: textColor,
-  );
+  /// Dialogue body — Crimson Text, parchment, generous line height.
+  static TextStyle get dialogueStyle => GoogleFonts.crimsonText(
+        color: parchment,
+        fontSize: 17,
+        height: 1.7,
+      );
 
-  static const TextStyle lockedChoiceStyle = TextStyle(
-    fontFamily: 'Serif',
-    fontSize: 15,
-    height: 1.4,
-    color: lockedGrey,
-  );
+  /// Narrator — italic Crimson Text, slightly dimmer.
+  static TextStyle get narratorStyle => GoogleFonts.crimsonText(
+        color: ash,
+        fontSize: 17,
+        height: 1.7,
+        fontStyle: FontStyle.italic,
+      );
 
-  static const TextStyle locationStyle = TextStyle(
-    fontFamily: 'Serif',
-    fontSize: 12,
-    fontWeight: FontWeight.w600,
-    letterSpacing: 3.0,
-    color: narratorDim,
-  );
+  /// Choice text — Crimson Text, parchment.
+  static TextStyle get choiceStyle => GoogleFonts.crimsonText(
+        color: parchment,
+        fontSize: 16,
+        height: 1.5,
+      );
 
-  static const TextStyle deltaHintStyle = TextStyle(
-    fontFamily: 'Serif',
-    fontSize: 11,
-    color: narratorDim,
-  );
+  /// Locked choice text.
+  static TextStyle get lockedChoiceStyle => GoogleFonts.crimsonText(
+        color: lockedGrey,
+        fontSize: 16,
+        height: 1.5,
+      );
+
+  /// Location header — Josefin Sans, uppercase, letter-spaced.
+  static TextStyle get locationStyle => GoogleFonts.josefinSans(
+        color: goldHighlight,
+        fontSize: 12,
+        fontWeight: FontWeight.w400,
+        letterSpacing: 6.0,
+      );
+
+  /// Delta hint text for choice consequences.
+  static TextStyle get deltaHintStyle => GoogleFonts.josefinSans(
+        color: ash,
+        fontSize: 11,
+        letterSpacing: 0.5,
+      );
+
+  /// Label text — Josefin Sans, small.
+  static TextStyle get labelStyle => GoogleFonts.josefinSans(
+        color: ash,
+        fontSize: 9,
+        fontWeight: FontWeight.w400,
+        letterSpacing: 1.0,
+      );
+
+  /// Veil value text — Josefin Sans.
+  static TextStyle get veilValueStyle => GoogleFonts.josefinSans(
+        color: goldHighlight,
+        fontSize: 10,
+        fontWeight: FontWeight.w600,
+      );
+
+  // ── Box decorations ───────────────────────────────────────────────────
+
+  /// Surface panel decoration.
+  static BoxDecoration get surfaceDecoration => const BoxDecoration(
+        color: surface,
+        border: Border(
+          top: BorderSide(color: smoke, width: 0.5),
+          bottom: BorderSide(color: smoke, width: 0.5),
+        ),
+      );
+
+  /// Choice card decoration.
+  static BoxDecoration choiceCardDecoration(Color veilColor) => BoxDecoration(
+        color: surface,
+        border: Border(
+          left: BorderSide(color: veilColor, width: 3),
+          top: BorderSide(color: smoke, width: 0.5),
+          bottom: BorderSide(color: smoke, width: 0.5),
+          right: BorderSide(color: smoke, width: 0.5),
+        ),
+      );
+
+  /// Hovered choice card decoration.
+  static BoxDecoration hoveredChoiceCardDecoration(Color veilColor) =>
+      BoxDecoration(
+        color: veilColor.withAlpha(20),
+        border: Border(
+          left: BorderSide(color: veilColor, width: 3),
+          top: BorderSide(color: veilColor.withAlpha(80), width: 0.5),
+          bottom: BorderSide(color: veilColor.withAlpha(80), width: 0.5),
+          right: BorderSide(color: veilColor.withAlpha(80), width: 0.5),
+        ),
+      );
 }
