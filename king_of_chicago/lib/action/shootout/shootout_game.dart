@@ -107,16 +107,17 @@ class ShootoutGame extends FlameGame with TapCallbacks {
   });
 
   @override
-  Future<void> onLoad() async {
-    // Dark alley background.
-    add(
-      RectangleComponent(
-        size: size,
-        paint: Paint()..color = GameTheme.backgroundColor,
-        priority: -2,
-      ),
-    );
+  Color backgroundColor() => GameTheme.backgroundColor;
 
+  @override
+  void onGameResize(Vector2 size) {
+    super.onGameResize(size);
+    if (!_started && size.x > 0 && size.y > 0) {
+      _initGame();
+    }
+  }
+
+  void _initGame() {
     // Warehouse wall — upper area.
     add(
       RectangleComponent(
@@ -177,7 +178,6 @@ class ShootoutGame extends FlameGame with TapCallbacks {
     add(_player);
 
     _started = true;
-    // Trigger immediate first spawn.
     _spawnTimer = _maxSpawnInterval;
   }
 

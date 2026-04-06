@@ -50,17 +50,18 @@ class AmbushGame extends FlameGame with TapCallbacks {
   }
 
   @override
-  Future<void> onLoad() async {
-    _totalTargets = _calculateTotalTargets();
+  Color backgroundColor() => const Color(0xFF1A1A2E);
 
-    // Dark background
-    add(
-      RectangleComponent(
-        size: size,
-        paint: Paint()..color = const Color(0xFF1A1A2E),
-        priority: -1,
-      ),
-    );
+  @override
+  void onGameResize(Vector2 size) {
+    super.onGameResize(size);
+    if (!_started && size.x > 0 && size.y > 0) {
+      _start();
+    }
+  }
+
+  void _start() {
+    _totalTargets = _calculateTotalTargets();
 
     // "AMBUSH!" title
     add(

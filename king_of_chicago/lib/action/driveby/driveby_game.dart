@@ -131,17 +131,18 @@ class DriveByGame extends FlameGame with TapCallbacks, DragCallbacks {
   });
 
   @override
-  Future<void> onLoad() async {
-    _health = config.playerHealth;
+  Color backgroundColor() => GameTheme.backgroundColor;
 
-    // Dark street background.
-    add(
-      RectangleComponent(
-        size: size,
-        paint: Paint()..color = GameTheme.backgroundColor,
-        priority: -3,
-      ),
-    );
+  @override
+  void onGameResize(Vector2 size) {
+    super.onGameResize(size);
+    if (!_started && size.x > 0 && size.y > 0) {
+      _initGame();
+    }
+  }
+
+  void _initGame() {
+    _health = config.playerHealth;
 
     // Street / road surface — lower half.
     add(
