@@ -41,7 +41,9 @@ class DialogueScreen extends ConsumerWidget {
             // Film grain overlay
             const GrainOverlay(opacity: 0.03),
             // Main content
-            Column(
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Column(
               children: [
                 _buildLocationHeader(),
                 const VeilHud(),
@@ -52,6 +54,7 @@ class DialogueScreen extends ConsumerWidget {
                   onChoiceSelected: onChoiceSelected,
                 ),
               ],
+            ),
             ),
           ],
         ),

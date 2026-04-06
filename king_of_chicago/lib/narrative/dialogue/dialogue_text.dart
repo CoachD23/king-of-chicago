@@ -88,12 +88,13 @@ class _DialogueTextState extends State<DialogueText>
 
   Widget _buildNarratorText() {
     return Container(
-      padding: const EdgeInsets.only(left: 16),
+      padding: const EdgeInsets.only(left: 16, top: 4, bottom: 4),
       decoration: const BoxDecoration(
+        color: Color(0x08C9A84C),
         border: Border(
           left: BorderSide(
             color: GameTheme.goldAccent,
-            width: 2.0,
+            width: 3.0,
           ),
         ),
       ),

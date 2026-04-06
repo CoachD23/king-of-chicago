@@ -36,10 +36,10 @@ class VeilHud extends ConsumerWidget {
         width: double.infinity,
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         decoration: const BoxDecoration(
-          color: GameTheme.surface,
+          color: GameTheme.backgroundColor,
           border: Border(
-            top: BorderSide(color: GameTheme.smoke, width: 0.5),
-            bottom: BorderSide(color: GameTheme.smoke, width: 0.5),
+            top: BorderSide(color: GameTheme.goldAccent, width: 0.5),
+            bottom: BorderSide(color: GameTheme.goldAccent, width: 0.5),
           ),
         ),
         child: Row(
@@ -71,7 +71,7 @@ class _VeilBar extends StatelessWidget {
   final int value;
 
   static const double _barHeight = 40.0;
-  static const double _barWidth = 8.0;
+  static const double _barWidth = 20.0;
 
   const _VeilBar({
     required this.glowColor,
@@ -107,8 +107,8 @@ class _VeilBar extends StatelessWidget {
           height: _barHeight,
           decoration: BoxDecoration(
             color: GameTheme.backgroundColor,
-            border: Border.all(color: primaryColor.withAlpha(60), width: 0.5),
-            borderRadius: BorderRadius.circular(2),
+            border: Border.all(color: glowColor.withAlpha(100), width: 1.0),
+            borderRadius: BorderRadius.circular(3),
           ),
           child: Align(
             alignment: Alignment.bottomCenter,
@@ -118,14 +118,14 @@ class _VeilBar extends StatelessWidget {
               width: _barWidth,
               height: _barHeight * fillFraction,
               decoration: BoxDecoration(
-                color: glowColor.withAlpha(180),
-                borderRadius: BorderRadius.circular(1),
+                color: glowColor.withAlpha(220),
+                borderRadius: BorderRadius.circular(2),
                 boxShadow: value > 0
                     ? [
                         BoxShadow(
-                          color: glowColor.withAlpha(40),
-                          blurRadius: 4,
-                          spreadRadius: 1,
+                          color: glowColor.withAlpha(80),
+                          blurRadius: 6,
+                          spreadRadius: 2,
                         ),
                       ]
                     : null,

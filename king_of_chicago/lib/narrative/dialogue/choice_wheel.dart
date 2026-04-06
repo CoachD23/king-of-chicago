@@ -206,7 +206,7 @@ class _ChoiceCardState extends State<_ChoiceCard> {
   Widget build(BuildContext context) {
     final decoration = _isHovered
         ? GameTheme.hoveredChoiceCardDecoration(widget.veilColor)
-        : GameTheme.choiceCardDecoration(widget.primaryColor);
+        : GameTheme.choiceCardDecoration(widget.veilColor);
 
     return MouseRegion(
       onEnter: (_) => setState(() => _isHovered = true),
@@ -222,7 +222,8 @@ class _ChoiceCardState extends State<_ChoiceCard> {
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 200),
             width: double.infinity,
-            padding: const EdgeInsets.all(14),
+            constraints: const BoxConstraints(minHeight: 56),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
             decoration: decoration,
             child: Row(
               children: [

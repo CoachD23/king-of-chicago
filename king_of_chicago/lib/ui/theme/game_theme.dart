@@ -56,7 +56,7 @@ class GameTheme {
         fontSize: 32,
         fontWeight: FontWeight.bold,
         letterSpacing: 4.0,
-      );
+      ).copyWith(fontFamilyFallback: ['Georgia', 'Times New Roman', 'serif']);
 
   /// Subtitle — Josefin Sans, ash/gold.
   static TextStyle get subtitleStyle => GoogleFonts.josefinSans(
@@ -64,7 +64,7 @@ class GameTheme {
         fontSize: 14,
         fontWeight: FontWeight.w300,
         letterSpacing: 6.0,
-      );
+      ).copyWith(fontFamilyFallback: ['Trebuchet MS', 'Arial', 'sans-serif']);
 
   /// Speaker name — Josefin Sans, uppercase, gold.
   static TextStyle get speakerStyle => GoogleFonts.josefinSans(
@@ -72,14 +72,14 @@ class GameTheme {
         fontSize: 13,
         fontWeight: FontWeight.w600,
         letterSpacing: 3.0,
-      );
+      ).copyWith(fontFamilyFallback: ['Trebuchet MS', 'Arial', 'sans-serif']);
 
   /// Dialogue body — Crimson Text, parchment, generous line height.
   static TextStyle get dialogueStyle => GoogleFonts.crimsonText(
         color: parchment,
         fontSize: 17,
         height: 1.7,
-      );
+      ).copyWith(fontFamilyFallback: ['Georgia', 'Times New Roman', 'serif']);
 
   /// Narrator — italic Crimson Text, slightly dimmer.
   static TextStyle get narratorStyle => GoogleFonts.crimsonText(
@@ -87,21 +87,21 @@ class GameTheme {
         fontSize: 17,
         height: 1.7,
         fontStyle: FontStyle.italic,
-      );
+      ).copyWith(fontFamilyFallback: ['Georgia', 'Times New Roman', 'serif']);
 
   /// Choice text — Crimson Text, parchment.
   static TextStyle get choiceStyle => GoogleFonts.crimsonText(
         color: parchment,
         fontSize: 16,
         height: 1.5,
-      );
+      ).copyWith(fontFamilyFallback: ['Georgia', 'Times New Roman', 'serif']);
 
   /// Locked choice text.
   static TextStyle get lockedChoiceStyle => GoogleFonts.crimsonText(
         color: lockedGrey,
         fontSize: 16,
         height: 1.5,
-      );
+      ).copyWith(fontFamilyFallback: ['Georgia', 'Times New Roman', 'serif']);
 
   /// Location header — Josefin Sans, uppercase, letter-spaced.
   static TextStyle get locationStyle => GoogleFonts.josefinSans(
@@ -109,14 +109,14 @@ class GameTheme {
         fontSize: 12,
         fontWeight: FontWeight.w400,
         letterSpacing: 6.0,
-      );
+      ).copyWith(fontFamilyFallback: ['Trebuchet MS', 'Arial', 'sans-serif']);
 
   /// Delta hint text for choice consequences.
   static TextStyle get deltaHintStyle => GoogleFonts.josefinSans(
         color: ash,
         fontSize: 11,
         letterSpacing: 0.5,
-      );
+      ).copyWith(fontFamilyFallback: ['Trebuchet MS', 'Arial', 'sans-serif']);
 
   /// Label text — Josefin Sans, small.
   static TextStyle get labelStyle => GoogleFonts.josefinSans(
@@ -124,14 +124,14 @@ class GameTheme {
         fontSize: 9,
         fontWeight: FontWeight.w400,
         letterSpacing: 1.0,
-      );
+      ).copyWith(fontFamilyFallback: ['Trebuchet MS', 'Arial', 'sans-serif']);
 
   /// Veil value text — Josefin Sans.
   static TextStyle get veilValueStyle => GoogleFonts.josefinSans(
         color: goldHighlight,
         fontSize: 10,
         fontWeight: FontWeight.w600,
-      );
+      ).copyWith(fontFamilyFallback: ['Trebuchet MS', 'Arial', 'sans-serif']);
 
   // ── Box decorations ───────────────────────────────────────────────────
 
@@ -146,7 +146,7 @@ class GameTheme {
 
   /// Choice card decoration.
   static BoxDecoration choiceCardDecoration(Color veilColor) => BoxDecoration(
-        color: surface,
+        color: Color.alphaBlend(veilColor.withAlpha(13), surface),
         border: Border(
           left: BorderSide(color: veilColor, width: 3),
           top: BorderSide(color: smoke, width: 0.5),

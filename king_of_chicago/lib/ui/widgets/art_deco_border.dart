@@ -14,7 +14,7 @@ class ArtDecoBorderPainter extends CustomPainter {
   const ArtDecoBorderPainter({
     this.color = GameTheme.goldAccent,
     this.cornerSize = 16.0,
-    this.strokeWidth = 1.0,
+    this.strokeWidth = 1.5,
   });
 
   @override
@@ -23,7 +23,8 @@ class ArtDecoBorderPainter extends CustomPainter {
       ..color = color
       ..strokeWidth = strokeWidth
       ..style = PaintingStyle.stroke
-      ..strokeCap = StrokeCap.square;
+      ..strokeCap = StrokeCap.square
+      ..isAntiAlias = true;
 
     final s = cornerSize;
     final step = s * 0.45;
@@ -108,7 +109,7 @@ class ArtDecoBorder extends StatelessWidget {
     required this.child,
     this.color = GameTheme.goldAccent,
     this.cornerSize = 16.0,
-    this.strokeWidth = 1.0,
+    this.strokeWidth = 1.5,
   });
 
   @override
