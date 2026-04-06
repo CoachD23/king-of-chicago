@@ -6,6 +6,7 @@ import 'core/save/save_screen.dart';
 import 'action/driveby/driveby_game.dart';
 import 'action/qte/ambush_game.dart';
 import 'action/qte/qte_result.dart';
+import 'action/qte/qte_skip_checker.dart';
 import 'action/shakedown/shakedown_screen.dart';
 import 'action/shootout/shootout_game.dart';
 import 'core/veils/veil_provider.dart';
@@ -19,6 +20,7 @@ import 'ui/widgets/art_deco_border.dart';
 import 'ui/widgets/gold_divider.dart';
 import 'ui/widgets/grain_overlay.dart';
 import 'ui/widgets/scene_transition.dart';
+import 'ui/widgets/veil_cinematic.dart';
 
 class KingOfChicagoApp extends StatelessWidget {
   const KingOfChicagoApp({super.key});
@@ -241,6 +243,23 @@ class _GameScreenState extends ConsumerState<GameScreen> {
 
   /// Builds the appropriate action screen based on the pending action type.
   Widget _buildActionScreen(String action, Map<String, dynamic>? config) {
+    // Check for 80+ Veil skip
+    final veilState = ref.read(veilProvider);
+    final skipResult = QteSkipChecker.canSkip(veilState, action);
+    if (skipResult != null && action != 'shakedown') {
+      return VeilCinematic(
+        veil: skipResult.veil,
+        message: skipResult.message,
+        onComplete: () {
+          _onActionComplete(const QteResult(
+            outcome: QteOutcome.cleanWin,
+            veilDeltas: {},
+            heatDelta: 0,
+          ));
+        },
+      );
+    }
+
     switch (action) {
       case 'ambush':
         final dreadLevel = (config?['dreadLevel'] as num?)?.toInt() ?? 0;
