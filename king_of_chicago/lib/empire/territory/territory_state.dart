@@ -18,6 +18,13 @@ class TerritoryState extends Equatable {
     );
   }
 
+  /// Creates the full state with all 8 territories.
+  factory TerritoryState.fullInitial() {
+    return TerritoryState(
+      territories: List.unmodifiable(Territory.allTerritories),
+    );
+  }
+
   /// Returns the territory with the given [id].
   ///
   /// Throws [ArgumentError] if no territory with that id exists.

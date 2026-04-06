@@ -85,4 +85,44 @@ class Territory extends Equatable {
       baseIncome: 800,
     ),
   ];
+
+  /// All 8 territories for the full game.
+  static const List<Territory> allTerritories = [
+    ...mvpTerritories,
+    Territory(
+      id: 'north_side',
+      name: 'North Side',
+      character: "Rival Irish gang (O'Banion crew)",
+      primaryRacket: 'Smuggling, docks',
+      baseIncome: 600,
+    ),
+    Territory(
+      id: 'west_side',
+      name: 'West Side',
+      character: 'Contested no-man\'s land',
+      primaryRacket: 'Protection rackets',
+      baseIncome: 400,
+    ),
+    Territory(
+      id: 'stockyards',
+      name: 'Stockyards',
+      character: 'Working-class union territory',
+      primaryRacket: 'Labor racketeering',
+      baseIncome: 450,
+    ),
+    Territory(
+      id: 'gold_coast',
+      name: 'Gold Coast',
+      character: 'Old money, high society',
+      primaryRacket: 'Extortion & blackmail',
+      baseIncome: 700,
+    ),
+    Territory(
+      id: 'levee_district',
+      name: 'Levee District',
+      character: 'Vice district, red-light',
+      primaryRacket: 'Nightclubs & prostitution',
+      baseIncome: 650,
+    ),
+  ];
 }

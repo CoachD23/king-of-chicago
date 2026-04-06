@@ -2,10 +2,13 @@ import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'action/driveby/driveby_game.dart';
 import 'action/qte/ambush_game.dart';
 import 'action/qte/qte_result.dart';
 import 'action/shakedown/shakedown_screen.dart';
+import 'action/shootout/shootout_game.dart';
 import 'core/veils/veil_provider.dart';
+import 'core/veils/veil_type.dart';
 import 'narrative/dialogue/dialogue_screen.dart';
 import 'narrative/engine/narrative_provider.dart';
 import 'ui/theme/game_theme.dart';
@@ -142,6 +145,36 @@ class _GameScreenState extends ConsumerState<GameScreen> {
             ),
           ),
         );
+      case 'shootout':
+        final veilState = ref.read(veilProvider);
+        return Scaffold(
+          backgroundColor: GameTheme.background,
+          body: GameWidget(
+            game: ShootoutGame(
+              config: ShootoutConfig(
+                dreadLevel: veilState.getValue(VeilType.dread),
+                kinshipLevel: veilState.getValue(VeilType.kinship),
+                respectLevel: veilState.getValue(VeilType.respect),
+              ),
+              onComplete: (result) => _onActionComplete(result),
+            ),
+          ),
+        );
+      case 'driveby':
+        final veilState = ref.read(veilProvider);
+        return Scaffold(
+          backgroundColor: GameTheme.background,
+          body: GameWidget(
+            game: DriveByGame(
+              config: DriveByConfig(
+                dreadLevel: veilState.getValue(VeilType.dread),
+                guileLevel: veilState.getValue(VeilType.guile),
+                empirLevel: veilState.getValue(VeilType.empire),
+              ),
+              onComplete: (result) => _onActionComplete(result),
+            ),
+          ),
+        );
       case 'shakedown':
         final targetName = (config?['targetName'] as String?) ?? 'Unknown';
         final targetResistance =
@@ -158,8 +191,9 @@ class _GameScreenState extends ConsumerState<GameScreen> {
     }
   }
 
-  void _onAmbushComplete(QteResult result) {
-    // Apply veil deltas from the QTE result
+  void _onAmbushComplete(QteResult result) => _onActionComplete(result);
+
+  void _onActionComplete(QteResult result) {
     if (result.veilDeltas.isNotEmpty) {
       ref.read(veilProvider.notifier).applyStringDeltas(result.veilDeltas);
     }
