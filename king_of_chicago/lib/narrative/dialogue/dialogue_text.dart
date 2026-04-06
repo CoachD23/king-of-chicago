@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../ui/theme/game_theme.dart';
+import '../../ui/widgets/character_portrait.dart';
 import '../engine/scene.dart';
 
 /// Art Deco styled dialogue line display.
@@ -58,29 +59,38 @@ class _DialogueTextState extends State<DialogueText>
   }
 
   Widget _buildSpeakerText() {
-    return Column(
+    return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Speaker name with gold underline
-        Container(
-          padding: const EdgeInsets.only(bottom: 4),
-          decoration: const BoxDecoration(
-            border: Border(
-              bottom: BorderSide(
-                color: GameTheme.goldAccent,
-                width: 0.5,
+        CharacterPortrait(speaker: widget.dialogueLine.speaker),
+        const SizedBox(width: 12),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Speaker name with gold underline
+              Container(
+                padding: const EdgeInsets.only(bottom: 4),
+                decoration: const BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(
+                      color: GameTheme.goldAccent,
+                      width: 0.5,
+                    ),
+                  ),
+                ),
+                child: Text(
+                  widget.dialogueLine.speaker.toUpperCase(),
+                  style: GameTheme.speakerStyle,
+                ),
               ),
-            ),
+              const SizedBox(height: 8),
+              Text(
+                widget.dialogueLine.line,
+                style: GameTheme.dialogueStyle,
+              ),
+            ],
           ),
-          child: Text(
-            widget.dialogueLine.speaker.toUpperCase(),
-            style: GameTheme.speakerStyle,
-          ),
-        ),
-        const SizedBox(height: 8),
-        Text(
-          widget.dialogueLine.line,
-          style: GameTheme.dialogueStyle,
         ),
       ],
     );

@@ -6,6 +6,7 @@ import '../../ui/theme/game_theme.dart';
 import '../../ui/widgets/art_deco_border.dart';
 import '../../ui/widgets/gold_divider.dart';
 import '../../ui/widgets/grain_overlay.dart';
+import '../../ui/widgets/scene_background.dart';
 import '../../ui/widgets/veil_hud.dart';
 import '../engine/narrative_engine.dart';
 import '../engine/scene.dart';
@@ -36,7 +37,9 @@ class DialogueScreen extends ConsumerWidget {
     return Scaffold(
       backgroundColor: GameTheme.backgroundColor,
       body: SafeArea(
-        child: Stack(
+        child: SceneBackground(
+          location: scene.location,
+          child: Stack(
           children: [
             // Film grain overlay
             const GrainOverlay(opacity: 0.03),
@@ -57,6 +60,7 @@ class DialogueScreen extends ConsumerWidget {
             ),
             ),
           ],
+        ),
         ),
       ),
     );
