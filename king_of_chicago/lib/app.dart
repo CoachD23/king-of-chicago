@@ -2,6 +2,7 @@ import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'core/save/save_screen.dart';
 import 'action/driveby/driveby_game.dart';
 import 'action/qte/ambush_game.dart';
 import 'action/qte/qte_result.dart';
@@ -69,6 +70,7 @@ class _GameScreenState extends ConsumerState<GameScreen> {
 
     return Scaffold(
       backgroundColor: GameTheme.backgroundColor,
+      appBar: _buildAppBar(),
       body: IndexedStack(
         index: _currentTab,
         children: [
@@ -78,6 +80,36 @@ class _GameScreenState extends ConsumerState<GameScreen> {
         ],
       ),
       bottomNavigationBar: _buildBottomBar(),
+    );
+  }
+
+  PreferredSizeWidget _buildAppBar() {
+    return AppBar(
+      backgroundColor: GameTheme.surface,
+      elevation: 0,
+      title: Text(
+        'KING OF CHICAGO',
+        style: GameTheme.labelStyle.copyWith(
+          color: GameTheme.goldAccent,
+          fontSize: 10,
+          letterSpacing: 4.0,
+          fontWeight: FontWeight.w600,
+        ),
+      ),
+      centerTitle: true,
+      actions: [
+        IconButton(
+          icon: const Icon(Icons.save_outlined, color: GameTheme.goldAccent, size: 20),
+          tooltip: 'Save / Load',
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute<void>(
+                builder: (_) => const SaveScreen(),
+              ),
+            );
+          },
+        ),
+      ],
     );
   }
 

@@ -22,6 +22,14 @@ class NpcState extends Equatable {
     return NpcState._(Map.unmodifiable(map));
   }
 
+  /// Creates the initial state with all NPCs (MVP + Phase 2) at relationship 0.
+  factory NpcState.fullInitial() {
+    final map = <String, int>{
+      for (final npc in Npc.allNpcs) npc.id: 0,
+    };
+    return NpcState._(Map.unmodifiable(map));
+  }
+
   /// Creates state from a map, clamping all values to [-100, 100].
   factory NpcState.fromMap(Map<String, int> relationships) {
     final clamped = <String, int>{

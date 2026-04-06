@@ -42,4 +42,33 @@ class Npc {
       territoryAnchor: 'little_italy',
     ),
   ];
+
+  /// All NPCs including Phase 2 characters.
+  static const List<Npc> allNpcs = [
+    ...mvpNpcs,
+    Npc(
+      id: 'dolly',
+      name: '"Diamond" Dolly',
+      role: 'Wildcard',
+      territoryAnchor: 'levee_district',
+    ),
+    Npc(
+      id: 'holt',
+      name: 'Agent Margaret Holt',
+      role: 'Fed Threat',
+      territoryAnchor: 'the_loop',
+    ),
+    Npc(
+      id: 'finnegan',
+      name: 'Alderman Finnegan',
+      role: 'Politician',
+      territoryAnchor: 'stockyards',
+    ),
+    Npc(
+      id: 'nicky',
+      name: 'Nicky "The Kid" Palazzo',
+      role: 'Upstart',
+      territoryAnchor: 'west_side',
+    ),
+  ];
 }

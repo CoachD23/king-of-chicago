@@ -7,6 +7,6 @@ void main() {
     await tester.pumpWidget(
       const ProviderScope(child: KingOfChicagoApp()),
     );
-    expect(find.text('KING OF CHICAGO'), findsOneWidget);
+    expect(find.text('KING OF CHICAGO'), findsWidgets);
   });
 }
