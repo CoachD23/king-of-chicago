@@ -1,0 +1,62 @@
+scene: first_territory
+location: south_side
+characters:
+  - vince
+  - tommy
+  - sal
+mood: tense
+type: rapids
+dialogue:
+  - speaker: narrator
+    line: "Morning. Sal Bonpensiero's grocery on Halsted. The back room where the real business happens. Sal's been running numbers out of here for the Don for fifteen years."
+  - speaker: tommy
+    line: "Sal's been short on his payments. Two months now. The Don let it slide because of his wife being sick, but..."
+  - speaker: tommy
+    line: "Word gets around we're not collecting, everybody stops paying."
+  - speaker: narrator
+    line: "Sal sees you through the window. He knows why you're here. He puts down his coffee like a man putting down a weapon."
+  - speaker: sal
+    line: "Vince. Tommy. Come in, come in. You want coffee? It's fresh."
+choices:
+  - id: shakedown_sal
+    line: "Skip the coffee, Sal. You're behind. Way behind. We need to settle this."
+    veils:
+      dread: 2
+      empire: 3
+    npc_deltas:
+      tommy: 5
+    heat:
+      south_side: 5
+    next: act1_falls
+    action: shakedown
+    action_config:
+      target_name: "Sal Bonpensiero"
+      target_resistance: 80
+  - id: protect_sal
+    line: "Sit down, Sal. I heard about Maria. How's she doing?"
+    veils:
+      respect: 3
+      kinship: 2
+    npc_deltas:
+      tommy: -3
+    next: act1_falls
+  - id: restructure_deal
+    line: "I know about Maria. Here's what we're going to do -- half payments until she's better, then you make up the rest."
+    veils:
+      sway: 2
+      empire: 1
+      respect: 2
+    npc_deltas:
+      tommy: 2
+    next: act1_falls
+  - id: make_sal_useful
+    line: "Forget the money. You've been here fifteen years. You hear things. Tell me what you've heard about O'Banion moving south."
+    veils:
+      guile: 3
+      sway: 1
+    npc_deltas:
+      tommy: -2
+    next: act1_falls
+    requires:
+      guile: 10
+    hidden: true

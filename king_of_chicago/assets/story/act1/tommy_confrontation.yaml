@@ -1,0 +1,49 @@
+scene: tommy_confrontation
+location: south_side
+characters:
+  - vince
+  - tommy
+mood: tense
+type: tributary
+dialogue:
+  - speaker: tommy
+    line: "Where was I? I was at the Roseland, Vince. Same place I am every Tuesday. You know that."
+  - speaker: tommy
+    line: "I didn't-- Jesus. You think I had something to do with this?"
+  - speaker: narrator
+    line: "His hands are shaking. Not the shake of a liar. The shake of a man who knows he should've been there."
+  - speaker: tommy
+    line: "I should've been at that dinner. I know that. You don't gotta say it."
+choices:
+  - id: forgive_tommy
+    line: "If you'd been there, you'd be in a box too. Forget it."
+    veils:
+      kinship: 3
+      respect: 2
+    npc_deltas:
+      tommy: 15
+    next: back_room_gathering
+  - id: let_guilt_work
+    line: "Yeah. You should have been."
+    veils:
+      dread: 2
+      sway: 1
+    npc_deltas:
+      tommy: -5
+    next: back_room_gathering
+  - id: redirect_tommy
+    line: "What's done is done. Right now I need you focused. Can you do that?"
+    veils:
+      empire: 2
+      kinship: 1
+    npc_deltas:
+      tommy: 5
+    next: back_room_gathering
+  - id: demand_information
+    line: "Then tell me something useful. Who else wasn't there that night?"
+    veils:
+      guile: 3
+      dread: 1
+    npc_deltas:
+      tommy: -3
+    next: back_room_gathering

@@ -1,0 +1,49 @@
+scene: rosa_grief
+location: south_side
+characters:
+  - vince
+  - rosa
+mood: somber
+type: tributary
+dialogue:
+  - speaker: rosa
+    line: "Vincenzo."
+  - speaker: narrator
+    line: "She's been crying, but she stopped. Rosa always stops before anyone can see."
+  - speaker: rosa
+    line: "Ma won't eat. Three days. She just sits in the kitchen and stares at his chair."
+  - speaker: rosa
+    line: "This is what this life does, Vince. This is what it always does."
+choices:
+  - id: comfort_rosa
+    line: "I know. I'm sorry, Rosa. I'll go see Ma after this."
+    veils:
+      kinship: 3
+      respect: 2
+    npc_deltas:
+      rosa: 10
+    next: back_room_gathering
+  - id: deflect_grief
+    line: "We can grieve later. Right now the family needs to hold together."
+    veils:
+      empire: 2
+      dread: 1
+    npc_deltas:
+      rosa: -10
+    next: back_room_gathering
+  - id: promise_change
+    line: "It won't always be like this. I'm going to make things different."
+    veils:
+      respect: 2
+      legend: 1
+    npc_deltas:
+      rosa: 3
+    next: back_room_gathering
+  - id: be_honest
+    line: "You're right. And I don't know how to fix that."
+    veils:
+      kinship: 2
+      respect: 3
+    npc_deltas:
+      rosa: 8
+    next: back_room_gathering

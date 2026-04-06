@@ -1,0 +1,66 @@
+scene: act1_falls
+location: south_side
+characters:
+  - vince
+  - tommy
+mood: chaotic
+type: falls
+dialogue:
+  - speaker: narrator
+    line: "You're two blocks from Sal's when the first shot punches through the windshield. Glass everywhere. Tommy yanks the wheel hard left."
+  - speaker: tommy
+    line: "Down! Get down!"
+  - speaker: narrator
+    line: "A Ford sedan, no plates, pulled alongside. Two shooters. Thompson guns. O'Banion's calling card."
+  - speaker: narrator
+    line: "The car fishtails onto Archer Avenue. More shots. The back window goes. Tommy's bleeding from his forehead but he's driving."
+  - speaker: tommy
+    line: "Hold on. Hold on, hold on--"
+action: ambush
+action_config:
+  target_name: "O'Banion Gunmen"
+  target_resistance: 90
+choices:
+  - id: fight_back
+    line: "Give me the piece from the glove box. Now."
+    veils:
+      dread: 3
+      legend: 2
+    npc_deltas:
+      tommy: 5
+    heat:
+      south_side: 10
+    next: act1_aftermath
+  - id: survive_escape
+    line: "Forget shooting. Drive. Get us to Little Italy -- they won't follow us in there."
+    veils:
+      guile: 3
+      empire: 1
+    npc_deltas:
+      tommy: 3
+    heat:
+      south_side: 5
+    next: act1_aftermath
+  - id: protect_tommy
+    line: "You're hit. Pull over, I'm driving."
+    veils:
+      kinship: 3
+      respect: 2
+    npc_deltas:
+      tommy: 15
+    heat:
+      south_side: 8
+    next: act1_aftermath
+  - id: call_in_support
+    line: "Enzo's place is three blocks east. Lay on the horn. They'll hear us coming."
+    veils:
+      sway: 2
+      kinship: 2
+    npc_deltas:
+      tommy: 5
+    heat:
+      south_side: 5
+    next: act1_aftermath
+    requires:
+      kinship: 12
+    hidden: true

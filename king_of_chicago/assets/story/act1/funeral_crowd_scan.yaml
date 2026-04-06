@@ -1,0 +1,46 @@
+scene: funeral_crowd_scan
+location: south_side
+characters:
+  - vince
+  - tommy
+mood: tense
+type: tributary
+dialogue:
+  - speaker: narrator
+    line: "You stand at the back of the nave. Black suits. Black dresses. Enough flowers to choke on. Everyone who matters in Chicago is in this room, or conspicuously absent."
+  - speaker: narrator
+    line: "The Galetti brothers are here. Sal Bonpensiero from the South Side. A few aldermen pretending they never took an envelope."
+  - speaker: tommy
+    line: "You see who's not here?"
+  - speaker: tommy
+    line: "Mickey O'Banion. Not even a wreath."
+choices:
+  - id: note_allies
+    line: "Forget Mickey. Look who IS here. That's our headcount."
+    veils:
+      guile: 3
+      empire: 1
+    next: back_room_gathering
+  - id: note_threat
+    line: "No wreath means no respect. Which means he's already making plans."
+    veils:
+      guile: 2
+      dread: 1
+    npc_deltas:
+      tommy: 3
+    next: back_room_gathering
+  - id: dismiss_mickey
+    line: "Mickey's smarter than showing up here. Doesn't mean anything."
+    veils:
+      sway: 2
+      respect: 1
+    next: back_room_gathering
+  - id: legendary_entrance
+    line: "Good. Let everyone see us standing here, calm. Let them wonder what we know."
+    veils:
+      legend: 3
+      guile: 1
+    requires:
+      legend: 5
+    next: back_room_gathering
+    hidden: true

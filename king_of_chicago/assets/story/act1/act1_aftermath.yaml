@@ -1,0 +1,79 @@
+scene: act1_aftermath
+location: south_side
+characters:
+  - vince
+  - tommy
+  - enzo
+  - rosa
+mood: tense
+type: river
+dialogue:
+  - speaker: narrator
+    line: "Enzo's kitchen. Dawn light through lace curtains. Tommy sits at the table with a dishrag pressed to his head. It's already soaked through. Rosa boils water without being asked."
+  - speaker: enzo
+    line: "So. Now we know."
+  - speaker: enzo
+    line: "O'Banion didn't just kill my brother. He's coming for all of us."
+  - speaker: rosa
+    line: "Vincenzo, your hand."
+  - speaker: narrator
+    line: "You look down. Blood. Not yours -- Tommy's, from when you pulled him out of the car. Your hands are steady. That's either a good thing or a terrible one."
+  - speaker: enzo
+    line: "We have maybe two days before Mickey makes a real move on the South Side. Maybe less. What happens next is up to you, Vince."
+  - speaker: narrator
+    line: "The kitchen is quiet. Coffee percolates. Somewhere outside, a milk truck rattles past. Chicago doesn't stop for anybody."
+choices:
+  - id: declare_war
+    line: "No more waiting. We hit them before they hit us again."
+    veils:
+      dread: 3
+      empire: 2
+    npc_deltas:
+      tommy: 10
+      enzo: -5
+      rosa: -10
+    heat:
+      south_side: 10
+    next: act2_war_footing
+  - id: build_coalition
+    line: "We can't fight the North Side alone. I'm calling the Galettis. And the aldermen. Everyone who owes us."
+    veils:
+      sway: 3
+      empire: 2
+    npc_deltas:
+      enzo: 8
+      tommy: 3
+    next: act2_coalition
+  - id: protect_family
+    line: "First thing -- Rosa, Ma, everyone we care about goes somewhere safe. Then we figure out the rest."
+    veils:
+      kinship: 3
+      respect: 2
+    npc_deltas:
+      rosa: 15
+      enzo: 5
+      tommy: -2
+    next: act2_family_first
+  - id: play_dead
+    line: "Let Mickey think he won tonight. Let him get comfortable. That's when we move."
+    veils:
+      guile: 3
+      legend: 2
+    npc_deltas:
+      enzo: 3
+      tommy: -8
+    next: act2_long_game
+  - id: take_the_chair
+    line: "Enzo. It's time. Give me the chair. Give me the family. I'll finish this."
+    veils:
+      empire: 3
+      legend: 2
+      dread: 1
+    npc_deltas:
+      enzo: -3
+      tommy: 15
+      rosa: -5
+    requires:
+      empire: 12
+    next: act2_new_don
+    hidden: true

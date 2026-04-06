@@ -1,0 +1,56 @@
+scene: street_after_funeral
+location: south_side
+characters:
+  - vince
+  - mickey
+  - tommy
+mood: threatening
+type: river
+dialogue:
+  - speaker: narrator
+    line: "The rain's let up. Mourners spill onto Taylor Street, lighting cigarettes with wet hands. A black Packard idles at the corner. It doesn't belong here."
+  - speaker: tommy
+    line: "Vince. That's O'Banion's car."
+  - speaker: narrator
+    line: "Mickey steps out alone. No bodyguard. Either very brave or very sure of himself. He straightens his coat and walks straight toward you."
+  - speaker: mickey
+    line: "Vincent. My condolences. Truly. Don Castellano was a man of substance."
+  - speaker: mickey
+    line: "I thought it best we talk before things get... complicated."
+choices:
+  - id: face_mickey
+    line: "You've got a lot of nerve showing up here, O'Banion."
+    veils:
+      dread: 3
+      legend: 2
+    npc_deltas:
+      mickey: -5
+      tommy: 5
+    next: south_side_night
+  - id: talk_mickey
+    line: "Complicated how? Speak plain, Mickey."
+    veils:
+      sway: 2
+      guile: 2
+    npc_deltas:
+      mickey: 5
+    next: south_side_night
+  - id: walk_away
+    line: "Not today. This is a funeral, not a negotiation."
+    veils:
+      guile: 2
+      respect: 3
+    npc_deltas:
+      mickey: -3
+      tommy: -2
+    next: south_side_night
+  - id: invite_mickey_in
+    line: "You came alone. That takes something. Say what you came to say."
+    veils:
+      respect: 2
+      sway: 2
+      legend: 1
+    npc_deltas:
+      mickey: 10
+      tommy: -5
+    next: south_side_night

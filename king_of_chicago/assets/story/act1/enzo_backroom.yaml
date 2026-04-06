@@ -1,0 +1,49 @@
+scene: enzo_backroom
+location: south_side
+characters:
+  - vince
+  - enzo
+mood: somber
+type: tributary
+dialogue:
+  - speaker: narrator
+    line: "The sacristy smells like old wood and older money. Enzo closes the door with the care of a man who's been closing doors his whole life."
+  - speaker: enzo
+    line: "Sit. Please."
+  - speaker: enzo
+    line: "My brother is dead. And now everyone out there is doing arithmetic. Counting heads. Counting guns."
+  - speaker: enzo
+    line: "I need to know what kind of arithmetic you're doing, Vince."
+choices:
+  - id: pledge_loyalty
+    line: "I'm not counting anything. Your brother gave me everything. I owe this family."
+    veils:
+      kinship: 3
+      respect: 2
+    npc_deltas:
+      enzo: 10
+    next: back_room_gathering
+  - id: ask_what_enzo_wants
+    line: "What do you need from me, Enzo? Specifically."
+    veils:
+      guile: 2
+      sway: 1
+    npc_deltas:
+      enzo: 3
+    next: back_room_gathering
+  - id: state_ambition
+    line: "Someone has to step up. The longer we wait, the worse it gets."
+    veils:
+      empire: 3
+      dread: 1
+    npc_deltas:
+      enzo: -5
+    next: back_room_gathering
+  - id: ask_about_killer
+    line: "Before we talk about what's next -- do we know who did this?"
+    veils:
+      guile: 2
+      respect: 1
+    npc_deltas:
+      enzo: 5
+    next: back_room_gathering

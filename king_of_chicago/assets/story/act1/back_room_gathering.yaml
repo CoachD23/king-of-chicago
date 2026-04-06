@@ -1,0 +1,62 @@
+scene: back_room_gathering
+location: south_side
+characters:
+  - vince
+  - enzo
+  - tommy
+mood: tense
+type: river
+dialogue:
+  - speaker: narrator
+    line: "The back room at Bianchi's. Espresso and cigarettes. The table where Don Castellano held court for twenty years. His chair is empty. Nobody sits in it."
+  - speaker: enzo
+    line: "We're all here. So. The question nobody wants to ask."
+  - speaker: enzo
+    line: "Who speaks for this family now?"
+  - speaker: narrator
+    line: "Tommy looks at you. Enzo looks at the table. The silence does the talking."
+  - speaker: tommy
+    line: "I mean... it's obvious, isn't it?"
+  - speaker: enzo
+    line: "Nothing is obvious, Thomas. That's the problem."
+choices:
+  - id: claim_power
+    line: "I'll say what everyone's thinking. I'll take the chair. If you'll have me."
+    veils:
+      dread: 2
+      empire: 3
+    npc_deltas:
+      enzo: -8
+      tommy: 10
+    next: street_after_funeral
+  - id: defer_to_enzo
+    line: "Enzo, you're his brother. By blood and by right, it should be you."
+    veils:
+      respect: 3
+      kinship: 2
+    npc_deltas:
+      enzo: 15
+      tommy: -3
+    next: street_after_funeral
+  - id: play_it_quiet
+    line: "Nobody needs to sit in that chair today. Let's just get through the week."
+    veils:
+      guile: 3
+      sway: 2
+    npc_deltas:
+      enzo: 5
+      tommy: 3
+    next: street_after_funeral
+  - id: power_with_consensus
+    line: "The chair doesn't matter. What matters is that when I walk outside, Mickey O'Banion doesn't see cracks."
+    veils:
+      sway: 2
+      empire: 2
+      legend: 1
+    requires:
+      sway: 8
+    npc_deltas:
+      enzo: 5
+      tommy: 8
+    next: street_after_funeral
+    hidden: true

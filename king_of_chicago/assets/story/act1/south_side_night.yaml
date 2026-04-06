@@ -1,0 +1,56 @@
+scene: south_side_night
+location: south_side
+characters:
+  - vince
+  - tommy
+mood: quiet
+type: river
+dialogue:
+  - speaker: narrator
+    line: "Past midnight. The South Side goes quiet the way a held breath goes quiet. Tommy drives. The streetlights paint everything amber and black."
+  - speaker: tommy
+    line: "Hell of a day."
+  - speaker: tommy
+    line: "So what do we do? Seriously. Because I've been thinking, and I don't-- I don't know what the right move is."
+  - speaker: narrator
+    line: "For once, Tommy isn't filling the silence with noise. He's actually asking."
+choices:
+  - id: plan_the_hit
+    line: "We find out who killed the Don. And we make an example so loud that nobody forgets."
+    veils:
+      dread: 3
+      empire: 2
+    npc_deltas:
+      tommy: 5
+    heat:
+      south_side: 5
+    next: first_territory
+  - id: shore_up_alliances
+    line: "Before we do anything, we need to know who's with us. Call the Galettis. Call Sal. Tomorrow."
+    veils:
+      sway: 3
+      respect: 1
+    npc_deltas:
+      tommy: 3
+    next: first_territory
+  - id: visit_rosa
+    line: "Take me to Rosa's. I told her I'd check on Ma."
+    veils:
+      kinship: 3
+    npc_deltas:
+      tommy: -2
+      rosa: 8
+    next: first_territory
+  - id: hit_the_mattresses
+    line: "Nobody sleeps at home tonight. Get the boys. We go to the safehouse until we know what's what."
+    veils:
+      guile: 2
+      dread: 2
+    npc_deltas:
+      tommy: 8
+    heat:
+      south_side: 3
+    next: first_territory
+    requires:
+      dread: 8
+    hidden: true
