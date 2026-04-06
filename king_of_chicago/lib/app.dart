@@ -9,6 +9,8 @@ import 'action/shakedown/shakedown_screen.dart';
 import 'action/shootout/shootout_game.dart';
 import 'core/veils/veil_provider.dart';
 import 'core/veils/veil_type.dart';
+import 'empire/ui/empire_dashboard_screen.dart';
+import 'empire/ui/territory_map_screen.dart';
 import 'narrative/dialogue/dialogue_screen.dart';
 import 'narrative/engine/narrative_provider.dart';
 import 'ui/theme/game_theme.dart';
@@ -32,7 +34,7 @@ class KingOfChicagoApp extends StatelessWidget {
   }
 }
 
-/// Root game screen that loads the first scene and displays dialogue.
+/// Root game screen with bottom navigation for Story, Map, and Empire tabs.
 class GameScreen extends ConsumerStatefulWidget {
   const GameScreen({super.key});
 
@@ -41,6 +43,8 @@ class GameScreen extends ConsumerStatefulWidget {
 }
 
 class _GameScreenState extends ConsumerState<GameScreen> {
+  int _currentTab = 0;
+
   @override
   void initState() {
     super.initState();
@@ -54,16 +58,7 @@ class _GameScreenState extends ConsumerState<GameScreen> {
   Widget build(BuildContext context) {
     final narrativeState = ref.watch(narrativeProvider);
 
-    // Feature 4: Error state
-    if (narrativeState.error != null) {
-      return _buildErrorScreen(narrativeState.error!);
-    }
-
-    if (narrativeState.isLoading || narrativeState.currentScene == null) {
-      return _buildTitleScreen();
-    }
-
-    // Feature 1: Show action screen when pending action exists
+    // Action screens take over the entire UI (no bottom bar).
     final pendingAction = narrativeState.pendingAction;
     if (pendingAction != null) {
       return _buildActionScreen(
@@ -72,7 +67,88 @@ class _GameScreenState extends ConsumerState<GameScreen> {
       );
     }
 
-    // Feature 3: Wrap dialogue in a scene transition
+    return Scaffold(
+      backgroundColor: GameTheme.backgroundColor,
+      body: IndexedStack(
+        index: _currentTab,
+        children: [
+          _buildStoryTab(narrativeState),
+          const TerritoryMapScreen(),
+          const EmpireDashboardScreen(),
+        ],
+      ),
+      bottomNavigationBar: _buildBottomBar(),
+    );
+  }
+
+  Widget _buildBottomBar() {
+    return Container(
+      decoration: const BoxDecoration(
+        color: GameTheme.surface,
+        border: Border(
+          top: BorderSide(color: GameTheme.smoke, width: 0.5),
+        ),
+      ),
+      child: SafeArea(
+        top: false,
+        child: SizedBox(
+          height: 56,
+          child: Row(
+            children: [
+              _buildNavItem(0, Icons.auto_stories_outlined, 'STORY'),
+              _buildNavItem(1, Icons.map_outlined, 'MAP'),
+              _buildNavItem(2, Icons.attach_money, 'EMPIRE'),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildNavItem(int index, IconData icon, String label) {
+    final isSelected = _currentTab == index;
+    final color = isSelected ? GameTheme.goldAccent : GameTheme.ash;
+    return Expanded(
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: () => setState(() => _currentTab = index),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            if (isSelected)
+              Container(
+                width: 24,
+                height: 2,
+                margin: const EdgeInsets.only(bottom: 4),
+                color: GameTheme.goldAccent,
+              ),
+            Icon(icon, color: color, size: 22),
+            const SizedBox(height: 2),
+            Text(
+              label,
+              style: GameTheme.labelStyle.copyWith(
+                color: color,
+                fontSize: 8,
+                letterSpacing: 2.0,
+                fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  /// Builds the story tab content based on narrative state.
+  Widget _buildStoryTab(dynamic narrativeState) {
+    if (narrativeState.error != null) {
+      return _buildErrorScreen(narrativeState.error!);
+    }
+
+    if (narrativeState.isLoading || narrativeState.currentScene == null) {
+      return _buildTitleScreen();
+    }
+
     final sceneId = narrativeState.currentScene!.id;
     return SceneTransition(
       sceneKey: sceneId,
